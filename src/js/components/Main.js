@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { doSomething } from "../actions/primaryActions"
+import doSomethingActions from "../actions/primaryActions"
 
 // Transfer store data to props for this class
 @connect((store) => {
@@ -11,11 +11,11 @@ import { doSomething } from "../actions/primaryActions"
 })
 export default class Main extends React.Component {
   componentWillMount() {
-    this.props.dispatch(doSomething())
+    this.props.dispatch(doSomethingActions.doSomething())
   }
 
   doSomethingMore() {
-    this.props.dispatch(doSomething())
+    this.props.dispatch(doSomethingActions.doSomething())
   }
 
   render() {
