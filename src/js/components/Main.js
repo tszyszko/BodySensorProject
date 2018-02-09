@@ -1,30 +1,68 @@
-import React from "react"
-import { connect } from "react-redux"
+import React from "react";
+import { connect } from "react-redux";
 
-import doSomethingActions from "../actions/primaryActions"
+import { NavigationActions } from "../actions/navigation";
+import NavBar from "./navbar/NavBar";
+import {Welcome} from "./pages";
+import {
+  Grid,
+  Row,
+  Col,
+} from 'react-bootstrap';
+import './Main.scss';
 
-// Transfer store data to props for this class
-@connect((store) => {
+const mapStateToProps = (state) => {
   return {
-    primaryData: store.primaryData,
+    ...state,
+    curr_view: state.navigation.curr_view,
+    error: state.navigation.error
   };
-})
-export default class Main extends React.Component {
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initPage: () => dispatch(NavigationActions.navigateToHomePage()),
+    startButtonHandler: () => dispatch(NavigationActions.navigateToConnectPage())
+  }
+};
+
+
+class Main extends React.Component {
   componentWillMount() {
-    this.props.dispatch(doSomethingActions.doSomething())
+    this.props.initPage();
   }
 
-  doSomethingMore() {
-    this.props.dispatch(doSomethingActions.doSomething())
+  componentWillReceiveProps(props) {
+
+  }
+
+  // Choose correct page
+
+
+  loadPage() {
+    if (this.props.curr_view){
+      switch(this.props.curr_view) {
+        case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>)
+        case "connect": return null
+        default:
+          return null
+      }
+    }
+    return "Loading";
+
+
   }
 
   render() {
       let { primaryData } = this.props;
-      return <div>
-        <button onClick={this.doSomethingMore.bind(this)}>Randomize</button>
-        <div>
-        <span><strong>Response from action : </strong>{primaryData.data}</span>
-        </div>
-      </div>
+      return (
+        <div className="bg-1">
+          <NavBar onChange={this.props.initPage}/>
+          <Grid>
+            {this.loadPage()}
+          </Grid>
+        </div>);
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

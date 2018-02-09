@@ -1,8 +1,8 @@
 import { combineReducers } from "redux"
 
-import primaryData from "./primaryReducer"
+import navigation from "./navigation"
 
 export default combineReducers({
-  primaryData,
+  navigation,
   // add more reducers here
 })
