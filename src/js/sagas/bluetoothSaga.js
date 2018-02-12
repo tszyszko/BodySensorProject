@@ -160,6 +160,7 @@ function onDiscoverService() {
       return queue;
     })
     .catch(error => {
+
       console.log('Argh! ' + error);
     });
 }
