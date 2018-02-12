@@ -1,7 +1,7 @@
 import {
   NAVIGATION_CONNECT_PAGE,
   NAVIGATION_HOME_PAGE
-} from "../actions/navigation"
+} from "../actions/navigation";
 
 
 let initial_state = {
