@@ -8,7 +8,7 @@ export default class Welcome extends React.Component {
 
   static propTypes = {
     onChange:   React.PropTypes.func
-  }
+  };
 
   render() {
     return (
@@ -21,7 +21,8 @@ export default class Welcome extends React.Component {
           <p>
             <Button bsStyle="primary" onClick={this.props.onChange}>Get Started</Button>
           </p>
-        </Jumbotron>;
-      </div>);
+        </Jumbotron>
+      </div>
+    );
   }
 }
