@@ -1,9 +1,9 @@
-import { all } from 'redux-saga/effects';
+import { fork } from 'redux-saga/effects';
 import navigationSaga from './navigationSaga';
-
+import bluetoothSaga from './bluetoothSaga';
 
 
 export default function* sagas() {
-    yield all([
-    ]);
+  yield fork(navigationSaga);
+  yield fork(bluetoothSaga);
 }

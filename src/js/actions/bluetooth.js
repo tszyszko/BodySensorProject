@@ -5,7 +5,7 @@ export let BLUETOOTH_CONNECTED = "BLUETOOTH_CONNECTED";
 export let BLUETOOTH_FAILED = "BLUETOOTH_FAILED";
 
 
-export let NavigationActions = {
+export let BluetoothActions = {
   bluetoothInit: () => ({
     type: BLUETOOTH_INIT,
   }),
