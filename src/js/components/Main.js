@@ -11,7 +11,8 @@ import NavBar from "./navbar/NavBar";
 import {
   Welcome,
   Error,
-  Loading
+  Loading,
+  Activity
 } from "./pages";
 
 import {
@@ -57,6 +58,7 @@ class Main extends React.Component {
       switch(this.props.curr_view) {
         case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>);
         case "bluetooth_connect": return (<Loading />);
+        case "activity_view" : return (<Activity/>);
         default:
           return null
       }

@@ -1,13 +1,14 @@
 import {
   NAVIGATION_CONNECT_PAGE,
-  NAVIGATION_HOME_PAGE
+  NAVIGATION_HOME_PAGE,
+  NAVIGATION_ACTIVITY_PAGE
 } from "../actions/navigation";
 
 
 let initial_state = {
   curr_view: "",
   error: false
-}
+};
 
 
 const handleNavigationHomePage = (state) => {
@@ -15,14 +16,21 @@ const handleNavigationHomePage = (state) => {
     ...state,
     curr_view: "home"
   }
-}
+};
 
 const handleNavigationConnectPage = (state) => {
   return {
     ...state,
     curr_view: "bluetooth_connect"
   }
-}
+};
+
+const handleNavigationActivityPage = (state) => {
+  return {
+    ...state,
+    curr_view: "activity_view"
+  }
+};
 
 
 // A single reducer
@@ -33,6 +41,8 @@ export default function reducer(state=initial_state, action) {
         return handleNavigationHomePage(state);
       case NAVIGATION_CONNECT_PAGE:
         return handleNavigationConnectPage(state);
+      case NAVIGATION_ACTIVITY_PAGE:
+        return handleNavigationActivityPage(state);
     }
     return state
 }
