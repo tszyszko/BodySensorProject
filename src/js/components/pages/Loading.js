@@ -1,8 +1,10 @@
 import React from "react"
 import {
-  Jumbotron,
-  Button
+  Jumbotron
 } from 'react-bootstrap';
+import {
+  Icon
+} from 'react-fa';
 
 export default class Loading extends React.Component {
 
@@ -14,9 +16,10 @@ export default class Loading extends React.Component {
     return (
       <div>
         <Jumbotron>
-          <h1>Hello, world!</h1>
+          <h1>Connecting .......</h1>
           <p>
-            This is a simple exercise aid using sensixa's e-AR device to help you track your exercises
+            Please select e-AR2016 from the drop-down list
+            <Icon spin name="spinner" size="lg"/>
           </p>
           <p>
 

@@ -1,6 +1,6 @@
 import React from "react"
 import {
-  Jumbotron,
+  Alert,
   Button
 } from 'react-bootstrap';
 
@@ -14,11 +14,11 @@ export default class Error extends React.Component {
   render() {
     return (
       <div>
-        <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+        <Alert bsStyle="danger" onDismiss={this.props.handleDismiss}>
           <h4>Oh snap! You got an error!</h4>
           {this.props.error}
           <p>
-            <Button onClick={this.handleDismiss}>Start again!</Button>
+            <Button onClick={this.props.handleDismiss}>Start again!</Button>
           </p>
         </Alert>
       </div>);

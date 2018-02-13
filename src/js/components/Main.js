@@ -10,7 +10,8 @@ import {
 import NavBar from "./navbar/NavBar";
 import {
   Welcome,
-  Error
+  Error,
+  Loading
 } from "./pages";
 
 import {
@@ -51,11 +52,11 @@ class Main extends React.Component {
   loadPage() {
     // Display error if error
     if (this.props.error) {
-      return (<Error onChange={this.props.startButtonHandler} error={this.props.error} />)
+      return (<Error handleDismiss={this.props.initPage} error={this.props.error.toString()} />)
     } else if (this.props.curr_view){
       switch(this.props.curr_view) {
-        case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>)
-        case "connect": return null
+        case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>);
+        case "bluetooth_connect": return (<Loading />);
         default:
           return null
       }

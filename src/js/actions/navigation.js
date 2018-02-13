@@ -4,7 +4,7 @@
 
 export let NAVIGATION_CONNECT_PAGE = "NAVIGATION_CONNECT_PAGE";
 export let NAVIGATION_HOME_PAGE = "NAVIGATION_HOME_PAGE";
-
+export let NAVIGATION_ACTIVITY_PAGE = "NAVIGATION_ACTIVITY_PAGE";
 
 
 export let NavigationActions = {
@@ -14,6 +14,10 @@ export let NavigationActions = {
 
   navigateToHomePage: () => ({
     type: NAVIGATION_HOME_PAGE
+  }),
+
+  navigateToActivityPage: () => ({
+    type: NAVIGATION_ACTIVITY_PAGE
   })
 }
 

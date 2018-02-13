@@ -4,13 +4,15 @@ import {
   BLUETOOTH_INIT,
   BLUETOOTH_CONNECTED,
   BLUETOOTH_FAILED,
-  BluetoothActions
+  BluetoothActions,
+  BLUETOOTH_RESET
 } from "../actions/bluetooth"
 
 import {
   BluetoothConnect,
   BluetoothPromptToScanDevice
 } from "../utilities"
+import {NavigationActions} from "../actions/navigation";
 
 
 export default function* bluetoothSagas() {
@@ -23,7 +25,7 @@ function isWebBluetoothEnabled() {
 }
 
 function* handleError(msg) {
-  yield call(BluetoothActions.bluetoothError(msg));
+  yield put(BluetoothActions.bluetoothError(msg));
 }
 
 
@@ -37,6 +39,10 @@ function* handleBluetoothInit() {
     try {
       let device = yield call(BluetoothPromptToScanDevice);
       let connect = yield call(BluetoothConnect, device);
+      if (connect) {
+        yield put(BluetoothActions.bluetoothConnected);
+        yield put(NavigationActions.navigateToActivityPage);
+      }
     } catch(error) {
       yield handleError(error);
     }
