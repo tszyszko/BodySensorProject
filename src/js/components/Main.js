@@ -1,9 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
+import {
+  connect
+} from "react-redux";
 
-import { NavigationActions } from "../actions/navigation";
+import {
+  NavigationActions
+} from "../actions/navigation";
+
 import NavBar from "./navbar/NavBar";
-import {Welcome} from "./pages";
+import {
+  Welcome,
+  Error
+} from "./pages";
+
 import {
   Grid,
   Row,
@@ -15,7 +24,7 @@ const mapStateToProps = (state) => {
   return {
     ...state,
     curr_view: state.navigation.curr_view,
-    error: state.navigation.error
+    error: state.bluetooth.error
   };
 };
 
@@ -40,7 +49,10 @@ class Main extends React.Component {
 
 
   loadPage() {
-    if (this.props.curr_view){
+    // Display error if error
+    if (this.props.error) {
+      return (<Error onChange={this.props.startButtonHandler} error={this.props.error} />)
+    } else if (this.props.curr_view){
       switch(this.props.curr_view) {
         case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>)
         case "connect": return null
