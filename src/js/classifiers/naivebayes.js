@@ -1,46 +1,93 @@
+import walk from './saved_walk_params.csv';
+import still from './saved_still_params.csv';
+import crouch from './saved_crouches_params.csv';
+
+
+console.log(walk);
+console.log(still);
+console.log(crouch);
+
 /**
  * Created by LIn on 12/02/2018.
  */
-frameSize = 100;
+let frameSize = 100;
 
-behaviors =["walk", "crouches", "still"];
-priors = {};
-priors["walk"] = 0.4;
-priors["still"] = 0.4;
-priors["crouch"] = 0.2;
-behaviorsCounts = {};
-mean_mu_params = {};
-mean_var_params = {};
-variance_mu_params = {};
-variance_var_params = {};
-var steps = 0;
-var scale = 0.001;
+let behaviors =["walk", "crouches", "still"];
 
-axs = [];
-ays = [];
-azs = [];
-gxs = [];
-gys = [];
-gzs = [];
-mxs = [];
-mys = [];
-mzs = [];
+let priors = {
+    walk: 0.4,
+    still: 0.4,
+    crouch: 0.2
+};
 
-for (var i = 0; i < behaviors.length; i++) {
-    var behavior = behaviors[i];
-    behaviorsCounts[behavior] = 0;
-    var fileName = "saved_" + behavior + "_params.csv";
-    $.ajax({
-        type: "GET",
-        url: fileName,
-        dataType: "text",
-        async: false,
-        success: function(data) {readTrainedParams(behavior, data);}
-    });
+
+let behaviorsCounts = {};
+let mean_mu_params = {};
+let mean_var_params = {};
+let variance_mu_params = {};
+let variance_var_params = {};
+let steps = 0;
+let scale = 0.001;
+
+let axs = [];
+let ays = [];
+let azs = [];
+let gxs = [];
+let gys = [];
+let gzs = [];
+let mxs = [];
+let mys = [];
+let mzs = [];
+
+// for (let i = 0; i < behaviors.length; i++) {
+//     let behavior = behaviors[i];
+//     behaviorsCounts[behavior] = 0;
+//     let fileName = "saved_" + behavior + "_params.csv";
+//     $.ajax({
+//         type: "GET",
+//         url: fileName,
+//         dataType: "text",
+//         async: false,
+//         success: function(data) {readTrainedParams(behavior, data);}
+//     });
+// }
+
+function getMean(values) {
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i]
+  }
+  return sum / (values.length);
+}
+
+function getVariance(mean, values) {
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += (values[i] - mean) * (values[i] - mean)
+  }
+  return sum / (values.length);
+}
+
+function getMostLikelyBehavior(probabilities) {
+  let behav = "None";
+  let maxP = 0.0;
+  Object.keys(probabilities).forEach(function (key) {
+    let prob = probabilities[key];
+    if (prob >= maxP) {
+      maxP = prob;
+      behav = key;
+    }
+  });
+  return behav;
+}
+
+function isLowerThanThreshold(value, threshold) {
+  if (threshold < 0) {
+  }
 }
 
 function readTrainedParams(behavior, data) {
-    var lines = data.split(/\r\n|\n/);
+    let lines = data.split(/\r\n|\n/);
     mean_mu_params[behavior] = lines[0].split(',');
     console.log("mean_mu of still: " + mean_mu_params['still']);
     mean_var_params[behavior] = lines[1].split(',');
@@ -48,22 +95,23 @@ function readTrainedParams(behavior, data) {
     variance_var_params[behavior] = lines[3].split(',');
 }
 
-function handleIMUNotifications(event) {
-    //read the IMU sensor data and plot the data out
-    if (window.recording) {
-        logEventNotifications(event)
-    }
+function likelihood(x, mu, sigma2) {
+  let p = Math.sqrt(1.0/(2*Math.PI*sigma2)) * Math.exp(-0.5*(x-mu)*(x-mu)/sigma2);
+  return p;
+}
+
+export function handleIMUNotifications(event) {
     let value = event.target.value;
 
-    var ax = value.getInt16(1, true);
-    var ay = value.getInt16(3, true);
-    var az = value.getInt16(5, true);
-    var gx = value.getInt16(7, true);
-    var gy = value.getInt16(9, true);
-    var gz = value.getInt16(11, true);
-    var mx = value.getInt16(13, true);
-    var my = value.getInt16(15, true);
-    var mz = value.getInt16(17, true);
+    let ax = value.getInt16(1, true);
+    let ay = value.getInt16(3, true);
+    let az = value.getInt16(5, true);
+    let gx = value.getInt16(7, true);
+    let gy = value.getInt16(9, true);
+    let gz = value.getInt16(11, true);
+    let mx = value.getInt16(13, true);
+    let my = value.getInt16(15, true);
+    let mz = value.getInt16(17, true);
     if (mx < 0) mx *= -1;
     if (my < 0) my *= -1;
     if (mz < 0) mz *= -1;
@@ -79,56 +127,56 @@ function handleIMUNotifications(event) {
     mzs.push(mz);
 
     if (steps==frameSize) {
-        var probabilities = {};
-        var meanAx = getMean(axs);
-        var meanAy = getMean(ays);
-        var meanAz = getMean(azs);
-        var meanGx = getMean(gxs);
-        var meanGy = getMean(gys);
-        var meanGz = getMean(gzs);
-        var meanMx = getMean(mxs);
-        var meanMy = getMean(mys);
-        var meanMz = getMean(mzs);
+        let probabilities = {};
+        let meanAx = getMean(axs);
+        let meanAy = getMean(ays);
+        let meanAz = getMean(azs);
+        let meanGx = getMean(gxs);
+        let meanGy = getMean(gys);
+        let meanGz = getMean(gzs);
+        let meanMx = getMean(mxs);
+        let meanMy = getMean(mys);
+        let meanMz = getMean(mzs);
 
-        var varAx = getVariance(meanAx, axs);
-        var varAy = getVariance(meanAy, ays);
-        var varAz = getVariance(meanAz, azs);
-        var varGx = getVariance(meanGx, gxs);
-        var varGy = getVariance(meanGy, gys);
-        var varGz = getVariance(meanGz, gzs);
-        var varMx = getVariance(meanMx, mxs);
-        var varMy = getVariance(meanMy, mys);
-        var varMz = getVariance(meanMz, mzs);
+        let varAx = getVariance(meanAx, axs);
+        let varAy = getVariance(meanAy, ays);
+        let varAz = getVariance(meanAz, azs);
+        let varGx = getVariance(meanGx, gxs);
+        let varGy = getVariance(meanGy, gys);
+        let varGz = getVariance(meanGz, gzs);
+        let varMx = getVariance(meanMx, mxs);
+        let varMy = getVariance(meanMy, mys);
+        let varMz = getVariance(meanMz, mzs);
 
-        var prob = 1.0;
-        for (var i = 0; i < behaviors.length; i++) {
-            var behav = behaviors[i];
-            var p1 = likelihood(meanAx, mean_mu_params[behav][0], variance_mu_params[behav][0]);
-            var p2 = likelihood(meanAy, mean_mu_params[behav][1], variance_mu_params[behav][1]);
-            var p3 = likelihood(meanAz, mean_mu_params[behav][2], variance_mu_params[behav][2]);
-            var p4 = likelihood(meanGx, mean_mu_params[behav][3], variance_mu_params[behav][3]);
-            var p5 = likelihood(meanGy, mean_mu_params[behav][4], variance_mu_params[behav][4]);
-            var p6 = likelihood(meanGz, mean_mu_params[behav][5], variance_mu_params[behav][5]);
-            var p7 = likelihood(meanMx, mean_mu_params[behav][6], variance_mu_params[behav][6]);
-            var p8 = likelihood(meanMy, mean_mu_params[behav][7], variance_mu_params[behav][7]);
-            var p9 = likelihood(meanMz, mean_mu_params[behav][8], variance_mu_params[behav][8]);
+        let prob = 1.0;
+        for (let i = 0; i < behaviors.length; i++) {
+            let behav = behaviors[i];
+            let p1 = likelihood(meanAx, mean_mu_params[behav][0], variance_mu_params[behav][0]);
+            let p2 = likelihood(meanAy, mean_mu_params[behav][1], variance_mu_params[behav][1]);
+            let p3 = likelihood(meanAz, mean_mu_params[behav][2], variance_mu_params[behav][2]);
+            let p4 = likelihood(meanGx, mean_mu_params[behav][3], variance_mu_params[behav][3]);
+            let p5 = likelihood(meanGy, mean_mu_params[behav][4], variance_mu_params[behav][4]);
+            let p6 = likelihood(meanGz, mean_mu_params[behav][5], variance_mu_params[behav][5]);
+            let p7 = likelihood(meanMx, mean_mu_params[behav][6], variance_mu_params[behav][6]);
+            let p8 = likelihood(meanMy, mean_mu_params[behav][7], variance_mu_params[behav][7]);
+            let p9 = likelihood(meanMz, mean_mu_params[behav][8], variance_mu_params[behav][8]);
 
-            var p1v = likelihood(varAx, mean_var_params[behav][0], variance_var_params[behav][0]);
-            var p2v = likelihood(varAy, mean_var_params[behav][1], variance_var_params[behav][1]);
-            var p3v = likelihood(varAz, mean_var_params[behav][2], variance_var_params[behav][2]);
-            var p4v = likelihood(varGx, mean_var_params[behav][3], variance_var_params[behav][3]);
-            var p5v = likelihood(varGy, mean_var_params[behav][4], variance_var_params[behav][4]);
-            var p6v = likelihood(varGz, mean_var_params[behav][5], variance_var_params[behav][5]);
-            var p7v = likelihood(varMx, mean_var_params[behav][6], variance_var_params[behav][6]);
-            var p8v = likelihood(varMy, mean_var_params[behav][7], variance_var_params[behav][7]);
-            var p9v = likelihood(varMz, mean_var_params[behav][8], variance_var_params[behav][8]);
+            let p1v = likelihood(varAx, mean_var_params[behav][0], variance_var_params[behav][0]);
+            let p2v = likelihood(varAy, mean_var_params[behav][1], variance_var_params[behav][1]);
+            let p3v = likelihood(varAz, mean_var_params[behav][2], variance_var_params[behav][2]);
+            let p4v = likelihood(varGx, mean_var_params[behav][3], variance_var_params[behav][3]);
+            let p5v = likelihood(varGy, mean_var_params[behav][4], variance_var_params[behav][4]);
+            let p6v = likelihood(varGz, mean_var_params[behav][5], variance_var_params[behav][5]);
+            let p7v = likelihood(varMx, mean_var_params[behav][6], variance_var_params[behav][6]);
+            let p8v = likelihood(varMy, mean_var_params[behav][7], variance_var_params[behav][7]);
+            let p9v = likelihood(varMz, mean_var_params[behav][8], variance_var_params[behav][8]);
 
             prob = p1 * p2 * p3 * p4 * p5 * p6 * p7 * p8 * p9;
             prob = prob * p1v * p2v * p3v * p4v * p5v * p6v * p7v * p8v * p9v;
             probabilities[behav] = prob;
         }
 
-        var predictedBehavior = getMostLikelyBehavior(probabilities);
+        let predictedBehavior = getMostLikelyBehavior(probabilities);
         behaviorsCounts[predictedBehavior] += 1;
         console.log(predictedBehavior);
         document.getElementById(predictedBehavior).innerHTML = predictedBehavior + ": " + behaviorsCounts[predictedBehavior];

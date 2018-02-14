@@ -1,4 +1,5 @@
 import { takeLatest, fork, put, call } from 'redux-saga/effects';
+import { handleIMUNotifications } from '../classifiers/naivebayes';
 
 import {
   BLUETOOTH_INIT,
@@ -38,7 +39,7 @@ function* handleBluetoothInit() {
   else {
     try {
       let callbacks = {
-          handleIMUNotifications: () => {},
+          handleIMUNotifications,
           handleTemperatureNotifications: () => {},
           handleAccelNotifications: () => {}
       };

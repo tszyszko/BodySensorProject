@@ -48,6 +48,10 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: ["style-loader" , "css-loader" , "sass-loader"]
+      },
+      {
+        test: /\.csv$/,
+        loader: "dsv-loader"
       }
     ]
   },
