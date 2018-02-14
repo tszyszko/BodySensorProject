@@ -10,7 +10,7 @@ export function BluetoothPromptToScanDevice() {
   })
 }
 
-export function BluetoothConnect(device) {
+export function BluetoothConnect(device, callbacks) {
   return device.gatt.connect().then(server => {
   // Note that we could also get all services that match a specific UUID by
   // passing it to getPrimaryServices().
@@ -37,7 +37,7 @@ export function BluetoothConnect(device) {
             return characteristic.startNotifications().then(_ => {
               //console.log('> Notifications started');
               characteristic.addEventListener('characteristicvaluechanged',
-                handleAccelNotifications);
+                  callbacks.handleAccelNotifications);
             });
           }
           else if (characteristic.uuid == ['47442018-0f63-5b27-9122-728099603712']) {// console.log(">> Characteristic: Temperature");
@@ -45,7 +45,7 @@ export function BluetoothConnect(device) {
               //console.log('> Notifications started');
               //set the event listener for this characteristic
               characteristic.addEventListener('characteristicvaluechanged',
-                handleTemperatureNotifications);
+                  callbacks.handleTemperatureNotifications);
             });
           }
           else if (characteristic.uuid == ['47442020-0f63-5b27-9122-728099603712']) {//   console.log(">> Characteristic: IMU");
@@ -53,13 +53,13 @@ export function BluetoothConnect(device) {
               //console.log('> Notifications started');
               //set the event listener for this characteristic
               characteristic.addEventListener('characteristicvaluechanged',
-                handleIMUNotifications);
+                callbacks.handleIMUNotifications);
             });
           }
         });
       }));
+    });
       return queue;
-    }).then(() => true)
-  });
+  }).then(() => true);
 }
 

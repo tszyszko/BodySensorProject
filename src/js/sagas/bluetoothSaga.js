@@ -37,11 +37,16 @@ function* handleBluetoothInit() {
     'Please make sure the "Experimental Web Platform features" flag is enabled. (in chrome://flags)');
   else {
     try {
+      let callbacks = {
+          handleIMUNotifications: () => {},
+          handleTemperatureNotifications: () => {},
+          handleAccelNotifications: () => {}
+      };
       let device = yield call(BluetoothPromptToScanDevice);
-      let connect = yield call(BluetoothConnect, device);
+      let connect = yield call(BluetoothConnect, device, callbacks);
       if (connect) {
-        yield put(BluetoothActions.bluetoothConnected);
-        yield put(NavigationActions.navigateToActivityPage);
+        yield put(BluetoothActions.bluetoothConnected());
+        yield put(NavigationActions.navigateToActivityPage());
       }
     } catch(error) {
       yield handleError(error);
