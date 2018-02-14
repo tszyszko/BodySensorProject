@@ -1,33 +1,49 @@
 import React from "react"
 import {
-  Jumbotron,
+  Panel,
   Button,
   Grid, Row, Col
 } from 'react-bootstrap';
 
 export default class Activity extends React.Component {
 
-  static propTypes = {}
+  static propTypes = {
+    walkCount: React.PropTypes.number.isRequired,
+    stillCount: React.PropTypes.number.isRequired,
+    crouchCount: React.PropTypes.number.isRequired
+  }
 
   render() {
     return (
       <div>
         <Grid>
           <Row className="show-grid">
+
             <Col md={6} mdPush={6}>
-              <div id="still">Still</div>
+              <Panel>
+                <h1>Walk</h1>
+                <h2> {this.props.walkCount} </h2>
+              </Panel>
             </Col>
             <Col md={6} mdPull={6}>
-              <div id="walk">Still</div>
+              <Panel>
+                <h1>Crouch</h1>
+                <h2> {this.props.crouchCount} </h2>
+              </Panel>
             </Col>
           </Row>
 
           <Row className="show-grid">
             <Col md={6} mdPush={6}>
-              <div id="crouches">Still</div>
+              <Panel>
+                <h1>Still</h1>
+                <h2> {this.props.stillCount} </h2>
+              </Panel>
             </Col>
             <Col md={6} mdPull={6}>
-              <div id="pushup">Still</div>
+              <Panel>
+                <h2> To Do </h2>
+              </Panel>
             </Col>
           </Row>
         </Grid>

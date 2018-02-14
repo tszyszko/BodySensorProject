@@ -58,7 +58,10 @@ class Main extends React.Component {
       switch(this.props.curr_view) {
         case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>);
         case "bluetooth_connect": return (<Loading />);
-        case "activity_view" : return (<Activity/>);
+        case "activity_view" : return (<Activity walkCount={this.props.activity.walkCount}
+                                                 crouchCount={this.props.activity.crouchCount}
+                                                 stillCount={this.props.activity.stillCount}
+        />);
         default:
           return null
       }
@@ -75,6 +78,10 @@ class Main extends React.Component {
           <NavBar onChange={this.props.initPage}/>
           <Grid>
             {this.loadPage()}
+            {/*<Activity walkCount={this.props.activity.walkCount}*/}
+                      {/*crouchCount={this.props.activity.crouchCount}*/}
+                      {/*stillCount={this.props.activity.stillCount}*/}
+            {/*/>*/}
           </Grid>
         </div>);
   }
