@@ -63,16 +63,12 @@ class Main extends React.Component {
       switch(this.props.curr_view) {
         case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>);
         case "bluetooth_connect": return (<Loading />);
-        case "activity_view" : return (<Activity walkCount={this.props.activity.walkCount}
-                                                 crouchCount={this.props.activity.crouchCount}
-                                                 stillCount={this.props.activity.stillCount}
+        case "activity_view" : return (<Activity walkEvents={this.props.activity.walkEvents}
                                                  handleStopActivity={this.props.handleStopActivity}
                                                  startTime={this.props.activity.startTime}
                                                  currentActivity={this.props.activity.currentActivity}
         />);
-        case "summary_view" : return (<Summary walkCount={this.props.activity.walkCount}
-                                               crouchCount={this.props.activity.crouchCount}
-                                               stillCount={this.props.activity.stillCount}
+        case "summary_view" : return (<Summary walkEvents={this.props.activity.walkEvents}
                                                startTime={this.props.activity.startTime}
                                                stopTime={this.props.activity.stopTime}
         />);

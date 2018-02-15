@@ -14,9 +14,7 @@ import {
 export default class Summary extends React.Component {
 
   static propTypes = {
-    walkCount: React.PropTypes.number.isRequired,
-    stillCount: React.PropTypes.number.isRequired,
-    crouchCount: React.PropTypes.number.isRequired,
+    walkEvents: React.PropTypes.array.isRequired,
     startTime: React.PropTypes.number.isRequired,
     stopTime: React.PropTypes.number.isRequired
   }
@@ -26,7 +24,7 @@ export default class Summary extends React.Component {
       <div>
         {this.props.startTime? <WorkoutStats isStopped startTime={this.props.startTime} stopTime={this.props.stopTime}/>
           : null}
-        <Walking walkCount={this.props.walkCount}/>
+        <Walking walkEvents={this.props.walkEvents}/>
       </div>);
   }
 }

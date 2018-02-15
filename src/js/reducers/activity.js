@@ -9,9 +9,6 @@ import {
 
 let initial_state = {
   recording: false,
-  walkCount: 0,
-  stillCount: 0,
-  crouchCount: 0,
   currentActivity: "Waiting for data",
   walkEvents: [],
   startTime: null,
@@ -22,7 +19,6 @@ let initial_state = {
 const handleWalkEvent = (state, time) => {
   return {
     ...state,
-    walkCount: state.walkCount + 1,
     currentActivity: "walk",
     walkEvents: [...state.walkEvents, time]
   }
@@ -31,7 +27,6 @@ const handleWalkEvent = (state, time) => {
 const handleStillEvent = (state) => {
   return {
     ...state,
-    stillCount: state.stillCount + 1,
     currentActivity: "still"
   }
 };
@@ -39,7 +34,6 @@ const handleStillEvent = (state) => {
 const handleCrouchEvent = (state) => {
   return {
     ...state,
-    crouchCount: state.crouchCount + 1,
     currentActivity: "crouch"
   }
 };
@@ -48,6 +42,7 @@ const handleStartEvent = (state, time) => {
   return {
     ...state,
     startTime: time,
+    stopTime: null,
     recording: true,
     walkEvents: []
   }

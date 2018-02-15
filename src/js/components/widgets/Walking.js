@@ -11,10 +11,13 @@ import {
 export default class Walking extends React.Component {
 
   static propTypes = {
-    walkCount: React.PropTypes.number.isRequired,
+    walkEvents: React.PropTypes.array.isRequired,
   }
 
 
+  getWalkCount() {
+    return this.props.walkEvents.length;
+  }
 
   render() {
     return (
@@ -24,7 +27,7 @@ export default class Walking extends React.Component {
             <Panel.Title componentClass="h3">Walking</Panel.Title>
           </Panel.Heading>
           <Panel.Body>
-            <h1>{this.props.walkCount} Steps Recorded</h1>
+            <h1>{this.getWalkCount()} Steps Recorded</h1>
           </Panel.Body>
         </Panel>
       </div>);

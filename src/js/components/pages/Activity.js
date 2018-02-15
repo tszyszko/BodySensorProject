@@ -14,20 +14,20 @@ import {
 export default class Activity extends React.Component {
 
   static propTypes = {
-    walkCount: React.PropTypes.number.isRequired,
-    stillCount: React.PropTypes.number.isRequired,
-    crouchCount: React.PropTypes.number.isRequired,
+    walkEvents: React.PropTypes.array.isRequired,
     currentActivity: React.PropTypes.string.isRequired,
     handleStopActivity: React.PropTypes.func.isRequired,
     startTime: React.PropTypes.number
   }
+
+
 
   render() {
     return (
       <div>
         <CurrentActivity currActivity={this.props.currentActivity} handleStopActivity={this.props.handleStopActivity}/>
         {this.props.startTime? <WorkoutStats startTime={this.props.startTime}/> : null}
-        <Walking walkCount={this.props.walkCount}/>
+        <Walking walkEvents={this.props.walkEvents}/>
 
       </div>);
   }
