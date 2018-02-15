@@ -24,7 +24,7 @@ export default class Loading extends React.Component {
           <p>
 
           </p>
-        </Jumbotron>;
+        </Jumbotron>
       </div>);
   }
 }

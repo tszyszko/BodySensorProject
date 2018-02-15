@@ -61,6 +61,7 @@ class Main extends React.Component {
         case "activity_view" : return (<Activity walkCount={this.props.activity.walkCount}
                                                  crouchCount={this.props.activity.crouchCount}
                                                  stillCount={this.props.activity.stillCount}
+                                                 currentActivity={this.props.activity.currentActivity}
         />);
         default:
           return null
@@ -75,9 +76,12 @@ class Main extends React.Component {
       let { primaryData } = this.props;
       return (
         <div className="bg-1">
-          <NavBar onChange={this.props.initPage}/>
-          <Grid>
+
+          <Grid fluid>
+            <NavBar onChange={this.props.initPage}/>
             {this.loadPage()}
+
+
             {/*<Activity walkCount={this.props.activity.walkCount}*/}
                       {/*crouchCount={this.props.activity.crouchCount}*/}
                       {/*stillCount={this.props.activity.stillCount}*/}

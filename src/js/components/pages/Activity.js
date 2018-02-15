@@ -5,12 +5,17 @@ import {
   Grid, Row, Col
 } from 'react-bootstrap';
 
+import {
+  CurrentActivity
+} from '../widgets'
+
 export default class Activity extends React.Component {
 
   static propTypes = {
     walkCount: React.PropTypes.number.isRequired,
     stillCount: React.PropTypes.number.isRequired,
-    crouchCount: React.PropTypes.number.isRequired
+    crouchCount: React.PropTypes.number.isRequired,
+    currentActivity: React.PropTypes.string.isRequired
   }
 
   render() {
@@ -18,7 +23,7 @@ export default class Activity extends React.Component {
       <div>
         <Grid>
           <Row className="show-grid">
-
+            <CurrentActivity currActivity={this.props.currentActivity}/>
             <Col md={6} mdPush={6}>
               <Panel>
                 <h1>Walk</h1>

@@ -8,28 +8,32 @@ import {
 let initial_state = {
   walkCount: 0,
   stillCount: 0,
-  crouchCount: 0
+  crouchCount: 0,
+  currentActivity: "Waiting for data"
 };
 
 
 const handleWalkEvent = (state) => {
   return {
     ...state,
-    walkCount: state.walkCount + 1
+    walkCount: state.walkCount + 1,
+    currentActivity: "walk"
   }
 };
 
 const handleStillEvent = (state) => {
   return {
     ...state,
-    stillCount: state.stillCount + 1
+    stillCount: state.stillCount + 1,
+    currentActivity: "still"
   }
 };
 
 const handleCrouchEvent = (state) => {
   return {
     ...state,
-    crouchCount: state.crouchCount + 1
+    crouchCount: state.crouchCount + 1,
+    currentActivity: "crouch"
   }
 };
 
