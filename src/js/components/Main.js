@@ -14,7 +14,8 @@ import {
   Welcome,
   Error,
   Loading,
-  Activity
+  Activity,
+  Summary
 } from "./pages";
 
 import {
@@ -66,7 +67,14 @@ class Main extends React.Component {
                                                  crouchCount={this.props.activity.crouchCount}
                                                  stillCount={this.props.activity.stillCount}
                                                  handleStopActivity={this.props.handleStopActivity}
+                                                 startTime={this.props.activity.startTime}
                                                  currentActivity={this.props.activity.currentActivity}
+        />);
+        case "summary_view" : return (<Summary walkCount={this.props.activity.walkCount}
+                                               crouchCount={this.props.activity.crouchCount}
+                                               stillCount={this.props.activity.stillCount}
+                                               startTime={this.props.activity.startTime}
+                                               stopTime={this.props.activity.stopTime}
         />);
         default:
           return null

@@ -11,24 +11,22 @@ import {
   WorkoutStats
 } from '../widgets'
 
-export default class Activity extends React.Component {
+export default class Summary extends React.Component {
 
   static propTypes = {
     walkCount: React.PropTypes.number.isRequired,
     stillCount: React.PropTypes.number.isRequired,
     crouchCount: React.PropTypes.number.isRequired,
-    currentActivity: React.PropTypes.string.isRequired,
-    handleStopActivity: React.PropTypes.func.isRequired,
-    startTime: React.PropTypes.number
+    startTime: React.PropTypes.number.isRequired,
+    stopTime: React.PropTypes.number.isRequired
   }
 
   render() {
     return (
       <div>
-        <CurrentActivity currActivity={this.props.currentActivity} handleStopActivity={this.props.handleStopActivity}/>
-        {this.props.startTime? <WorkoutStats startTime={this.props.startTime}/> : null}
+        {this.props.startTime? <WorkoutStats isStopped startTime={this.props.startTime} stopTime={this.props.stopTime}/>
+          : null}
         <Walking walkCount={this.props.walkCount}/>
-
       </div>);
   }
 }
