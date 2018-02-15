@@ -45,13 +45,13 @@ export default class WorkoutStats extends React.Component {
 
   displaySummary() {
     return <div>
-      <h2><Icon name="stop-watch" size="lg"/> {this.state.seconds}</h2>
+      <h2> <Icon name="hourglass" size="lg"/> {this.state.seconds}</h2>
     </div>
   }
 
   displayRunning() {
     return <div>
-      <h2><Icon spin name="stop-watch" size="lg"/> {this.state.seconds}</h2>
+      <h2><Icon spin name="hourglass" size="lg"/> {this.state.seconds}</h2>
     </div>
   }
 

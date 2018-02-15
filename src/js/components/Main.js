@@ -24,6 +24,9 @@ import {
   Col,
 } from 'react-bootstrap';
 import './Main.scss';
+import {
+  Icon
+} from 'react-fa';
 
 const mapStateToProps = (state) => {
   return {
