@@ -12,6 +12,7 @@ export default class CurrentActivity extends React.Component {
 
   static propTypes = {
     currActivity: React.PropTypes.string.isRequired,
+    handleStopActivity: React.PropTypes.func.isRequired
   }
 
   returnIcon(activity) {
@@ -57,7 +58,14 @@ export default class CurrentActivity extends React.Component {
             <Panel.Title componentClass="h3">Current Activity</Panel.Title>
           </Panel.Heading>
           <Panel.Body>
-            {this.returnText(this.props.currActivity)}
+            <Row>
+              <Col xs={8}>
+                {this.returnText(this.props.currActivity)}
+              </Col>
+              <Col xs={4}>
+                <Button bsStyle="danger" block bsSize="lg" onClick={this.props.handleStopActivity}>Stop workout!</Button>
+              </Col>
+            </Row>
           </Panel.Body>
         </Panel>
       </div>);

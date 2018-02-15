@@ -27,11 +27,12 @@ export default class NavBar extends React.Component {
 
 
   render() {
-    return <Navbar>
+    return <Navbar inverse fixedTop fluid>
       <Navbar.Header>
         <Navbar.Brand>
           <a href="#" onClick={this.props.onChange}>Body Sensor Rep Counter</a>
         </Navbar.Brand>
+        <Navbar.Toggle />
       </Navbar.Header>
     </Navbar>;
   }

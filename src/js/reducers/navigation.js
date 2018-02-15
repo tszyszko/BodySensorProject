@@ -1,7 +1,8 @@
 import {
   NAVIGATION_CONNECT_PAGE,
   NAVIGATION_HOME_PAGE,
-  NAVIGATION_ACTIVITY_PAGE
+  NAVIGATION_ACTIVITY_PAGE,
+  NAVIGATION_SUMMARY_PAGE
 } from "../actions/navigation";
 
 
@@ -32,6 +33,13 @@ const handleNavigationActivityPage = (state) => {
   }
 };
 
+const handleNavigationSummaryPage = (state) => {
+  return {
+    ...state,
+    curr_view: "summary_view"
+  }
+};
+
 
 // A single reducer
 export default function reducer(state=initial_state, action) {
@@ -43,6 +51,8 @@ export default function reducer(state=initial_state, action) {
         return handleNavigationConnectPage(state);
       case NAVIGATION_ACTIVITY_PAGE:
         return handleNavigationActivityPage(state);
+      case NAVIGATION_SUMMARY_PAGE:
+        return handleNavigationSummaryPage(state);
     }
     return state
 }

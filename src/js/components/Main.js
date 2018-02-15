@@ -7,6 +7,8 @@ import {
   NavigationActions
 } from "../actions/navigation";
 
+
+
 import NavBar from "./navbar/NavBar";
 import {
   Welcome,
@@ -33,7 +35,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     initPage: () => dispatch(NavigationActions.navigateToHomePage()),
-    startButtonHandler: () => dispatch(NavigationActions.navigateToConnectPage())
+    startButtonHandler: () => dispatch(NavigationActions.navigateToConnectPage()),
+    handleStopActivity: () => dispatch(NavigationActions.navigateToSummaryPage())
   }
 };
 
@@ -46,6 +49,7 @@ class Main extends React.Component {
   componentWillReceiveProps(props) {
 
   }
+
 
   // Choose correct page
 
@@ -61,6 +65,7 @@ class Main extends React.Component {
         case "activity_view" : return (<Activity walkCount={this.props.activity.walkCount}
                                                  crouchCount={this.props.activity.crouchCount}
                                                  stillCount={this.props.activity.stillCount}
+                                                 handleStopActivity={this.props.handleStopActivity}
                                                  currentActivity={this.props.activity.currentActivity}
         />);
         default:
@@ -75,19 +80,21 @@ class Main extends React.Component {
   render() {
       let { primaryData } = this.props;
       return (
-        <div className="bg-1">
 
-          <Grid fluid>
-            <NavBar onChange={this.props.initPage}/>
-            {this.loadPage()}
+          <Grid fluid className="bg-1">
+            <Row>
+              <NavBar onChange={this.props.initPage}/>
+            </Row>
+            <Row>
+              {this.loadPage()}
+            </Row>
 
 
             {/*<Activity walkCount={this.props.activity.walkCount}*/}
                       {/*crouchCount={this.props.activity.crouchCount}*/}
                       {/*stillCount={this.props.activity.stillCount}*/}
             {/*/>*/}
-          </Grid>
-        </div>);
+          </Grid>);
   }
 }
 

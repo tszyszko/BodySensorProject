@@ -13,7 +13,7 @@ export default class Welcome extends React.Component {
   render() {
     return (
       <div>
-        <Jumbotron>
+        <Jumbotron fluid>
           <h1>Hello!</h1>
           <p>
             This is a simple exercise aid using sensixa's e-AR device to help you track your exercises

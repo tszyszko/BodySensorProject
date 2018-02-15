@@ -16,13 +16,14 @@ export default class Activity extends React.Component {
     walkCount: React.PropTypes.number.isRequired,
     stillCount: React.PropTypes.number.isRequired,
     crouchCount: React.PropTypes.number.isRequired,
-    currentActivity: React.PropTypes.string.isRequired
+    currentActivity: React.PropTypes.string.isRequired,
+    handleStopActivity: React.PropTypes.func.isRequired
   }
 
   render() {
     return (
       <div>
-        <CurrentActivity currActivity={this.props.currentActivity}/>
+        <CurrentActivity currActivity={this.props.currentActivity} handleStopActivity={this.props.handleStopActivity}/>
         <Walking walkCount={this.props.walkCount}/>
 
       </div>);

@@ -1,4 +1,4 @@
-import { takeLatest, fork, put, call, take } from 'redux-saga/effects';
+import { takeLatest, fork, put, call, take, select } from 'redux-saga/effects';
 import { buffers, eventChannel, END } from 'redux-saga';
 
 import { NaiveBayesClassifier } from '../classifiers/naivebayes';
@@ -50,17 +50,21 @@ function createBluetoothEventChannel() {
 function* handleClassifierEvents(channel) {
   while (true) {
     const action = yield take(channel);
-    switch (action.data.type) {
-      case 'walk':
-        yield put(ActivityActions.walkEvent());
-        break;
-      case 'still':
-        yield put(ActivityActions.stillEvent());
-        break;
-      case 'crouch':
-        yield put(ActivityActions.crouchEvent());
-        break;
-      default:
+    let timestamp = Date.now();
+    let recording = (state) => state.activity.recording;
+    if (recording) {
+      switch (action.data.type) {
+        case 'walk':
+          yield put(ActivityActions.walkEvent(timestamp));
+          break;
+        case 'still':
+          yield put(ActivityActions.stillEvent());
+          break;
+        case 'crouch':
+          yield put(ActivityActions.crouchEvent());
+          break;
+        default:
+      }
     }
     // console.log(action);
   }
@@ -86,6 +90,7 @@ function* handleBluetoothInit() {
       if (connect) {
         yield put(BluetoothActions.bluetoothConnected());
         yield put(NavigationActions.navigateToActivityPage());
+        yield put(ActivityActions.startEvent(Date.now()));
         yield fork(handleClassifierEvents, channel);
       }
     } catch(error) {
