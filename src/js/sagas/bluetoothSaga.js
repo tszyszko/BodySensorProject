@@ -11,12 +11,14 @@ import {
   BLUETOOTH_CONNECTED,
   BLUETOOTH_FAILED,
   BluetoothActions,
-  BLUETOOTH_RESET
+  BLUETOOTH_RESET,
+  BLUETOOTH_DISCONNECT
 } from "../actions/bluetooth"
 
 import {
   BluetoothConnect,
-  BluetoothPromptToScanDevice
+  BluetoothPromptToScanDevice,
+  BluetoothDisconnect
 } from "../utilities"
 import {NavigationActions} from "../actions/navigation";
 
@@ -70,6 +72,11 @@ function* handleClassifierEvents(channel) {
   }
 }
 
+function* handleDisconnect(device) {
+  yield take(BLUETOOTH_DISCONNECT);
+  yield call(BluetoothDisconnect, device);
+}
+
 
 
 function* handleBluetoothInit() {
@@ -92,6 +99,7 @@ function* handleBluetoothInit() {
         yield put(NavigationActions.navigateToActivityPage());
         yield put(ActivityActions.startEvent(Date.now()));
         yield fork(handleClassifierEvents, channel);
+        yield fork(handleDisconnect, device);
       }
     } catch(error) {
       yield handleError(error);

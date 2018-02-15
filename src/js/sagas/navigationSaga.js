@@ -25,6 +25,7 @@ function* handleHomeNav() {
 
 function* handleSummNav() {
   yield put(ActivityActions.stopEvent(Date.now()));
+  yield put(BluetoothActions.bluetoothDisconnect());
 }
 
 export default function* navigationSagas() {

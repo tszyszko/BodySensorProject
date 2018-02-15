@@ -2,7 +2,8 @@ import {
   BLUETOOTH_INIT,
   BLUETOOTH_CONNECTED,
   BLUETOOTH_FAILED,
-  BLUETOOTH_RESET
+  BLUETOOTH_RESET,
+  BLUETOOTH_DISCONNECT
 } from "../actions/bluetooth";
 
 
@@ -27,6 +28,15 @@ const handleBluetoothConnected = (state) => {
     ...state,
     pending: false,
     connected: true,
+    error: false
+  }
+};
+
+const handleBluetoothDisconnect = (state) => {
+  return {
+    ...state,
+    pending: false,
+    connected: false,
     error: false
   }
 };
@@ -61,6 +71,8 @@ export default function reducer(state=initial_state, action) {
       return handleBluetoothError(state, action.error);
     case BLUETOOTH_RESET:
       return handleBluetoothReset(state);
+    case BLUETOOTH_DISCONNECT:
+      return handleBluetoothDisconnect(state);
   }
   return state
 }

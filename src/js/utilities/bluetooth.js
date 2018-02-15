@@ -10,6 +10,10 @@ export function BluetoothPromptToScanDevice() {
   })
 }
 
+export function BluetoothDisconnect(device) {
+  device.gatt.disconnect();
+}
+
 export function BluetoothConnect(device, callbacks) {
   return device.gatt.connect().then(server => {
   // Note that we could also get all services that match a specific UUID by

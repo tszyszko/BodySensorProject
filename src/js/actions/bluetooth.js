@@ -4,6 +4,7 @@ export let BLUETOOTH_INIT = "BLUETOOTH_INIT";
 export let BLUETOOTH_CONNECTED = "BLUETOOTH_CONNECTED";
 export let BLUETOOTH_FAILED = "BLUETOOTH_FAILED";
 export let BLUETOOTH_RESET = "BLUETOOTH_RESET";
+export let BLUETOOTH_DISCONNECT = "BLUETOOTH_DISCONNECT";
 
 
 export let BluetoothActions = {
@@ -22,6 +23,10 @@ export let BluetoothActions = {
 
   bluetoothReset: (msg) => ({
     type: BLUETOOTH_RESET
+  }),
+
+  bluetoothDisconnect: () => ({
+    type: BLUETOOTH_DISCONNECT
   })
 
 
