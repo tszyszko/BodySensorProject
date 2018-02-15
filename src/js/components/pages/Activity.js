@@ -6,7 +6,8 @@ import {
 } from 'react-bootstrap';
 
 import {
-  CurrentActivity
+  CurrentActivity,
+  Walking
 } from '../widgets'
 
 export default class Activity extends React.Component {
@@ -21,37 +22,9 @@ export default class Activity extends React.Component {
   render() {
     return (
       <div>
-        <Grid>
-          <Row className="show-grid">
-            <CurrentActivity currActivity={this.props.currentActivity}/>
-            <Col md={6} mdPush={6}>
-              <Panel>
-                <h1>Walk</h1>
-                <h2> {this.props.walkCount} </h2>
-              </Panel>
-            </Col>
-            <Col md={6} mdPull={6}>
-              <Panel>
-                <h1>Crouch</h1>
-                <h2> {this.props.crouchCount} </h2>
-              </Panel>
-            </Col>
-          </Row>
+        <CurrentActivity currActivity={this.props.currentActivity}/>
+        <Walking walkCount={this.props.walkCount}/>
 
-          <Row className="show-grid">
-            <Col md={6} mdPush={6}>
-              <Panel>
-                <h1>Still</h1>
-                <h2> {this.props.stillCount} </h2>
-              </Panel>
-            </Col>
-            <Col md={6} mdPull={6}>
-              <Panel>
-                <h2> To Do </h2>
-              </Panel>
-            </Col>
-          </Row>
-        </Grid>
       </div>);
   }
 }
