@@ -1,6 +1,7 @@
 import walk from './saved_walk_params.csv';
 import still from './saved_still_params.csv';
 import crouch from './saved_crouches_params.csv';
+import pushup from './saved_pushup_params.csv';
 
 
 export class NaiveBayesClassifier {
@@ -10,7 +11,7 @@ export class NaiveBayesClassifier {
     this.callback = eventCallback;
     this.frameSize = 100;
 
-    this.behaviors = ["walk", "crouch", "still"];
+    this.behaviors = ["walk", "crouch", "pushup", "still"];
     this.current_behavior_state = "still";
 
     this.spike_begin = false;
@@ -23,8 +24,9 @@ export class NaiveBayesClassifier {
     this.minimum_interval_steps = 1;
 
     this.priors = {
-      walk: 0.4,
-      still: 0.4,
+      walk: 0.3,
+      still: 0.3,
+      pushup: 0.2,
       crouch: 0.2
     };
 
@@ -35,32 +37,37 @@ export class NaiveBayesClassifier {
     this.mean_mu_params = {
       walk: walk[0],
       still: still[0],
-      crouch: crouch[0]
+      crouch: crouch[0],
+      pushup: pushup[0]
     };
 
     this.mean_var_params = {
       walk: walk[1],
       still: still[1],
-      crouch: crouch[1]
+      crouch: crouch[1],
+      pushup: pushup[1]
     };
 
     this.variance_mu_params = {
       walk: walk[2],
       still: still[2],
-      crouch: crouch[2]
+      crouch: crouch[2],
+      pushup: pushup[2]
     };
 
     this.variance_var_params = {
       walk: walk[3],
       still: still[3],
-      crouch: crouch[3]
+      crouch: crouch[3],
+      pushup: pushup[3]
     };
 
     this.spike_threshold_params = {};
     this.max_values = {
       walk: walk[4],
       still: still[4],
-      crouch: crouch[4]
+      crouch: crouch[4],
+      pushup: pushup[4]
     };
 
     for (var i = 0; i < this.behaviors.length; i++) {
@@ -150,7 +157,7 @@ export class NaiveBayesClassifier {
 
     // can add timer to get rid of multiple small spikes
     if (!this.spike_begin && ay >= this.spike_threshold_params[this.current_behavior_state][1]) {
-      if (Date.now() - this.last_spike_end_time > 500) {
+      if (Date.now() - this.last_spike_end_time > 200) {
         this.spike_begin = true; // detected a possible spike
       } else {
         console.log("noise...")
@@ -168,8 +175,8 @@ export class NaiveBayesClassifier {
       console.log("actually still...")
       this.actually_staying_still = true;
       this.behaviorsDetailCounts[this.current_behavior_state] -= 1;  // undone the wrong counting
-      this.callback({type: this.current_behavior_state});
       this.current_behavior_state = "still";
+      this.callback({type: this.current_behavior_state});
       this.steps2 = 0;
     }
 
