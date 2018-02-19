@@ -48,7 +48,8 @@
   },
   "scripts": {
     "dev": "./node_modules/.bin/webpack-dev-server --hot --content-base src --inline --host 0.0.0.0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack -p"
   },
   "author": "",
   "license": "ISC"
