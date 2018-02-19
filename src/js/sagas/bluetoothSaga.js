@@ -65,6 +65,8 @@ function* handleClassifierEvents(channel) {
         case 'crouch':
           yield put(ActivityActions.crouchEvent());
           break;
+        case 'pushup':
+          yield put(ActivityActions.pressupEvent());
         default:
       }
     }

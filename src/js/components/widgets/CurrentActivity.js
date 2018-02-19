@@ -21,6 +21,10 @@ export default class CurrentActivity extends React.Component {
         return (
           <Icon spin name="cog" size="lg"/>
         );
+      case "pressup":
+      return (
+          <Icon spin name="cog" size="lg"/>
+      );
       case "crouch":
         return (
           <Icon name="street-view" size="lg"/>
@@ -39,6 +43,9 @@ export default class CurrentActivity extends React.Component {
       case "walk":
         return (
           <h2>{this.returnIcon(this.props.currActivity)} Currently walking</h2>);
+      case "pressup":
+        return (
+            <h2>{this.returnIcon(this.props.currActivity)} Currently doing Pressups</h2>);
       case "crouch":
         return (
           <h2>{this.returnIcon(this.props.currActivity)} Currently squating</h2>);

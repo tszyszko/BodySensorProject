@@ -8,7 +8,8 @@ import {
 import {
   CurrentActivity,
   Walking,
-  WorkoutStats
+  WorkoutStats,
+  Pressup
 } from '../widgets'
 
 export default class Summary extends React.Component {
@@ -16,7 +17,8 @@ export default class Summary extends React.Component {
   static propTypes = {
     walkEvents: React.PropTypes.array.isRequired,
     startTime: React.PropTypes.number.isRequired,
-    stopTime: React.PropTypes.number.isRequired
+    stopTime: React.PropTypes.number.isRequired,
+    pressupEvents: React.PropTypes.array.isRequired
   }
 
   render() {
@@ -25,6 +27,7 @@ export default class Summary extends React.Component {
         {this.props.startTime? <WorkoutStats isStopped startTime={this.props.startTime} stopTime={this.props.stopTime}/>
           : null}
         <Walking walkEvents={this.props.walkEvents}/>
+        <Pressup pressupEvents={this.props.pressupEvents}/>
       </div>);
   }
 }

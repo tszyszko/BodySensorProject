@@ -67,6 +67,7 @@ class Main extends React.Component {
         case "home":  return (<Welcome onChange={this.props.startButtonHandler}/>);
         case "bluetooth_connect": return (<Loading />);
         case "activity_view" : return (<Activity walkEvents={this.props.activity.walkEvents}
+                                                 pressupEvents={this.props.activity.pressupEvents}
                                                  handleStopActivity={this.props.handleStopActivity}
                                                  startTime={this.props.activity.startTime}
                                                  currentActivity={this.props.activity.currentActivity}
@@ -74,6 +75,7 @@ class Main extends React.Component {
         case "summary_view" : return (<Summary walkEvents={this.props.activity.walkEvents}
                                                startTime={this.props.activity.startTime}
                                                stopTime={this.props.activity.stopTime}
+                                               pressupEvents={this.props.activity.pressupEvents}
         />);
         default:
           return null

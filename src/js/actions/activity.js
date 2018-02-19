@@ -5,6 +5,7 @@ export let ACTIVITY_CROUCH_EVENT = "ACTIVITY_CROUCH_EVENT";
 export let ACTIVITY_STILL_EVENT = "ACTIVITY_STILL_EVENT";
 export let ACTIVITY_START_EVENT = "ACTIVITY_START_EVENT";
 export let ACTIVITY_STOP_EVENT = "ACTIVITY_STOP_EVENT";
+export let ACTIVITY_PRESSUP_EVENT = "ACTIVITY_PRESSUP_EVENT";
 
 
 export let ActivityActions = {
@@ -28,6 +29,11 @@ export let ActivityActions = {
 
   stopEvent: (timestamp) => ({
     type: ACTIVITY_STOP_EVENT,
+    time: timestamp
+  }),
+  
+  pressupEvent: (timestamp) => ({
+    type: ACTIVITY_PRESSUP_EVENT,
     time: timestamp
   })
 

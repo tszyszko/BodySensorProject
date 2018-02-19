@@ -3,7 +3,8 @@ import {
   ACTIVITY_STILL_EVENT,
   ACTIVITY_CROUCH_EVENT,
   ACTIVITY_START_EVENT,
-  ACTIVITY_STOP_EVENT
+  ACTIVITY_STOP_EVENT,
+  ACTIVITY_PRESSUP_EVENT
 } from "../actions/activity";
 
 
@@ -11,6 +12,7 @@ let initial_state = {
   recording: false,
   currentActivity: "Waiting for data",
   walkEvents: [],
+  pressupEvents: [],
   startTime: null,
   stopTime: null
 };
@@ -57,12 +59,23 @@ const handleStopEvent = (state, time) => {
 };
 
 
+const handlePressupEvent = (state, time) => {
+  return {
+    ...state,
+    currentActivity: "pressup",
+    pressupEvents: [...state.pressupEvents, time]
+  }
+};
+
+
 // A single reducer
 export default function reducer(state=initial_state, action) {
 
   switch (action.type) {
     case ACTIVITY_WALK_EVENT:
       return handleWalkEvent(state, action.time);
+    case ACTIVITY_PRESSUP_EVENT:
+      return handlePressupEvent(state, action.time);
     case ACTIVITY_STILL_EVENT:
       return handleStillEvent(state);
     case ACTIVITY_CROUCH_EVENT:
